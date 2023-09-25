@@ -38,4 +38,6 @@ jobs:
           DATE=$(date +'%Y%m%d')
           ./dropbox_uploader.sh -f $DROPBOX_UPLOADER_CONFIG upload ./puzzle_$DATE.puz /Atlantic_Puzzles/puzzle_$DATE.puz
         env:
-          DROPBOX_UPLOADER_CONFIG: ${{ secrets.DROPBOX_TOKEN }}
+          APP_KEY: ${{ secrets.APP_KEY }}
+          APP_SECRET: ${{ secrets.APP_SECRET }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
