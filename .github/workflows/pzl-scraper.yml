@@ -41,4 +41,4 @@ jobs:
       - name: Upload puzzle to Dropbox
         run: |
           DATE=$(date +'%Y%m%d_%A') 
-          python upload_puzzle_to_dropbox.py ./atlanticpuzzle_$DATE.puz /Atlantic_Puzzles/atlanticpuzzle_$DATE.puz ${{ secrets.DROPBOX_ACCESS_TOKEN }}
+          python upload_to_dropbox.py ./atlanticpuzzle_$DATE.puz /Atlantic_Puzzles/atlanticpuzzle_$DATE.puz ${{ secrets.DROPBOX_ACCESS_TOKEN }}
