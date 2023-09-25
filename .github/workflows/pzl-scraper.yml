@@ -25,8 +25,8 @@ jobs:
 
       - name: Download Puzzle
         run: |
-          DATE=$(date +'%Y%m%d')
-          xword-dl nd --latest -o ./puzzle_$DATE.puz
+          DATE=$(date +'%Y%m%d_%A') 
+          xword-dl nd --latest -o ./atlanticpuzzle_$DATE.puz
 
       - name: Upload puzzle to Dropbox
         run: |
