@@ -5,7 +5,7 @@ on:
     branches:
       - main  # or your default branch name
   schedule:
-    - cron: '0 13 * * *' # Scheduled to run every day at 1pm
+    - cron: '0 13 * * *' # Scheduled to run every day at 1pm UTC or 8am 
 
 jobs:
   download-and-upload:
@@ -36,7 +36,7 @@ jobs:
           --data-urlencode "refresh_token=${{ secrets.DROPBOX_REFRESH_TOKEN }}" \
           --data-urlencode "client_id=${{ secrets.DROPBOX_APP_KEY }}" \
           --data-urlencode "client_secret=${{ secrets.DROPBOX_APP_SECRET }}" | jq -r '.access_token')
-          echo "::set-env name=DROPBOX_ACCESS_TOKEN::$access_token"
+          echo "DROPBOX_ACCESS_TOKEN=${access_token}" >> $GITHUB_ENV
 
       - name: Upload puzzle to Dropbox
         run: |
