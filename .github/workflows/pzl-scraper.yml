@@ -35,9 +35,7 @@ jobs:
 
       - name: Create Dropbox Uploader Config
         run: |
-          echo "OAUTH_APP_KEY=${{ secrets.APP_KEY }}" > .dropbox_uploader
-          echo "OAUTH_APP_SECRET=${{ secrets.APP_SECRET }}" >> .dropbox_uploader
-          echo "OAUTH_REFRESH_TOKEN=${{ secrets.ACCESS_TOKEN }}" >> .dropbox_uploader
+          echo "${{ secrets.DROPBOX_UPLOADER_CONFIG }}" > .dropbox_uploader
 
       - name: Upload puzzle to Dropbox
         run: |
