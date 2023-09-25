@@ -1,22 +1,41 @@
-name: Scrape Atlantic Crossword Puzzle
+name: Download and Upload Crossword Puzzle
 
 on:
-  schedule: 
-    - cron: '0 8 * * *' # Run every day at 8am
+  push:
+    branches:
+      - main  # or your default branch name
+  schedule:
+    - cron: '0 8 * * *' # Scheduled to run every day at 2 AM
 
 jobs:
-  scrape:
-    runs-on: ubuntu-18.04
+  download-and-upload:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install python3-pip
-          pip3 install xword-dl
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
 
-      - name: Scrape crossword puzzle
+      - name: Install Dependencies
         run: |
-          # Add your script commands here
+          pip install xword-dl
+
+      - name: Download Puzzle
+        run: |
+          DATE=$(date +'%Y%m%d')
+          xword-dl nd --latest -o ./puzzle_$DATE.puz
+
+      - name: Download Dropbox Uploader
+        run: |
+          curl -LO https://github.com/andreafabrizi/Dropbox-Uploader/raw/master/dropbox_uploader.sh
+          chmod +x dropbox_uploader.sh
+
+      - name: Upload puzzle to Dropbox
+        run: |
+          DATE=$(date +'%Y%m%d')
+          ./dropbox_uploader.sh -f $DROPBOX_UPLOADER_CONFIG upload ./puzzle_$DATE.puz /Atlantic_Puzzles/puzzle_$DATE.puz
+        env:
+          DROPBOX_UPLOADER_CONFIG: ${{ secrets.DROPBOX_TOKEN }}
