@@ -28,17 +28,13 @@ jobs:
           DATE=$(date +'%Y%m%d_%A') 
           xword-dl nd --latest -o ./atlanticpuzzle_$DATE.puz
 
-      - name: Get new access token
+      - name: Upload puzzle to Dropbox
         run: |
+          DATE=$(date +'%Y%m%d_%A')
           access_token=$(curl -X POST https://api.dropboxapi.com/oauth2/token \
           --header "Content-Type: application/x-www-form-urlencoded" \
           --data-urlencode "grant_type=refresh_token" \
-          --data-urlencode "refresh_token=${{ secrets.DROPBOX_REFRESH_TOKEN }}" \
-          --data-urlencode "client_id=${{ secrets.DROPBOX_APP_KEY }}" \
-          --data-urlencode "client_secret=${{ secrets.DROPBOX_APP_SECRET }}" | jq -r '.access_token')
-          echo $access_token
-
-      - name: Upload puzzle to Dropbox
-        run: |
-          DATE=$(date +'%Y%m%d_%A') 
-          python upload_to_dropbox.py "./atlanticpuzzle_$DATE.puz" "/Atlantic_Puzzles/atlanticpuzzle_$DATE.puz" "${{ env.DROPBOX_ACCESS_TOKEN }}"
+          --data-urlencode "refresh_token=$DROPBOX_REFRESH_TOKEN" \
+          --data-urlencode "client_id=$DROPBOX_APP_KEY" \
+          --data-urlencode "client_secret=$DROPBOX_APP_SECRET" | jq -r '.access_token')
+          python upload_to_dropbox.py "./atlanticpuzzle_$DATE.puz" "/Atlantic_Puzzles/atlanticpuzzle_$DATE.puz" "${access_token}"
