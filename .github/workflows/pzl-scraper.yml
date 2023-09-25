@@ -36,7 +36,7 @@ jobs:
           --data-urlencode "refresh_token=${{ secrets.DROPBOX_REFRESH_TOKEN }}" \
           --data-urlencode "client_id=${{ secrets.DROPBOX_APP_KEY }}" \
           --data-urlencode "client_secret=${{ secrets.DROPBOX_APP_SECRET }}" | jq -r '.access_token')
-          echo "DROPBOX_ACCESS_TOKEN=${access_token}" >> $GITHUB_ENV
+          echo $access_token
 
       - name: Upload puzzle to Dropbox
         run: |
