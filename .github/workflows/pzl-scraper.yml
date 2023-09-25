@@ -1,4 +1,4 @@
-name: Download and Upload Crossword Puzzle
+name: Download and Upload Atlantic Crossword Puzzle
 
 on:
   push:
