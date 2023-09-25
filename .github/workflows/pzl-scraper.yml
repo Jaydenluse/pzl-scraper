@@ -22,19 +22,24 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install xword-dl
-          pip install pydrive  # Installing library for Google Drive access
 
       - name: Download Puzzle
         run: |
           DATE=$(date +'%Y%m%d')
           xword-dl nd --latest -o ./puzzle_$DATE.puz
 
-      # Setup Google Drive API credentials from GitHub secret
-      - name: Setup Google Drive API Credentials
+      - name: Download Dropbox Uploader
         run: |
-          echo "${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}" > credentials.json
+          curl -LO https://github.com/andreafabrizi/Dropbox-Uploader/raw/master/dropbox_uploader.sh
+          chmod +x dropbox_uploader.sh
 
-      - name: Upload puzzle to Google Drive
+      # Create .dropbox_uploader file from GitHub secret
+      - name: Setup Dropbox Uploader
+        run: |
+          echo "${{ secrets.DROPBOX_UPLOADER_CONFIG }}" > ~/.dropbox_uploader
+
+      - name: Upload puzzle to Dropbox
         run: |
           DATE=$(date +'%Y%m%d')
-          python upload_to_gdrive.py ./puzzle_$DATE.puz /Atlantic_Puzzles/puzzle_$DATE.puz
+          ./dropbox_uploader.sh -d upload ./puzzle_$DATE.puz /Atlantic_Puzzles/puzzle_$DATE.puz
+
