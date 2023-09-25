@@ -1,4 +1,4 @@
-name: Download and Upload Crossword Puzzle
+name: Download and Upload Atlantic Crossword Puzzle
 
 on:
   push:
@@ -29,6 +29,6 @@ jobs:
           xword-dl nd --latest -o ./puzzle_$DATE.puz
 
       - name: Upload puzzle to Dropbox
-            run: |
-              DATE=$(date +'%Y%m%d_%A') 
-              python upload_to_dropbox.py ./puzzle_$DATE.puz /Atlantic_Puzzles/atlanticpuzzle_$DATE.puz ${{ secrets.DROPBOX_ACCESS_TOKEN }}
+        run: |
+          DATE=$(date +'%Y%m%d_%A') 
+          python upload_to_dropbox.py ./puzzle_$DATE.puz /Atlantic_Puzzles/atlanticpuzzle_$DATE.puz ${{ secrets.DROPBOX_ACCESS_TOKEN }}
