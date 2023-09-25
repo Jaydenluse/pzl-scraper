@@ -33,11 +33,12 @@ jobs:
           curl -LO https://github.com/andreafabrizi/Dropbox-Uploader/raw/master/dropbox_uploader.sh
           chmod +x dropbox_uploader.sh
 
-      - name: Create Dropbox Uploader Config
+      # Assuming you have checked in the .dropbox_uploader file in your repository
+      - name: Setup Dropbox Uploader
         run: |
-          echo "${{ secrets.DROPBOX_UPLOADER_CONFIG }}" > .dropbox_uploader
+          cp .dropbox_uploader ~/.dropbox_uploader
 
       - name: Upload puzzle to Dropbox
         run: |
           DATE=$(date +'%Y%m%d')
-          ./dropbox_uploader.sh upload ./puzzle_$DATE.puz /Atlantic_Puzzles/puzzle_$DATE.puz
+          ./dropbox_uploader.sh -f ~/.dropbox_uploader upload ./puzzle_$DATE.puz /Atlantic_Puzzles/puzzle_$DATE.puz
