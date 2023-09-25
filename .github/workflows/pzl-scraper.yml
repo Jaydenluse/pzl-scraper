@@ -28,16 +28,6 @@ jobs:
           DATE=$(date +'%Y%m%d')
           xword-dl nd --latest -o ./puzzle_$DATE.puz
 
-      - name: Download Dropbox Uploader
-        run: |
-          curl -LO https://github.com/andreafabrizi/Dropbox-Uploader/raw/master/dropbox_uploader.sh
-          chmod +x dropbox_uploader.sh
-
-      # Create .dropbox_uploader file from GitHub secret
-      - name: Setup Dropbox Uploader
-        run: |
-          echo "${{ secrets.DROPBOX_UPLOADER_CONFIG }}" > ~/.dropbox_uploader
-
       - name: Upload puzzle to Dropbox
         run: |
           DATE=$(date +'%Y%m%d')
