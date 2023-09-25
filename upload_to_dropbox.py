@@ -1,9 +1,8 @@
-import requests
 import sys
+import requests
 
 def upload_to_dropbox(file_path, target_path, access_token):
     url = "https://content.dropboxapi.com/2/files/upload"
-    print(access_token)
     headers = {
         "Authorization": f"Bearer {access_token}",
         "Dropbox-API-Arg": f'{{"path": "{target_path}","mode": "add","autorename": true,"mute": false}}',

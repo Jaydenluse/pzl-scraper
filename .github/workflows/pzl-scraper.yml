@@ -31,10 +31,13 @@ jobs:
       - name: Upload puzzle to Dropbox
         run: |
           DATE=$(date +'%Y%m%d_%A')
-          access_token=$(curl -X POST https://api.dropboxapi.com/oauth2/token \
-          --header "Content-Type: application/x-www-form-urlencoded" \
-          --data-urlencode "grant_type=refresh_token" \
-          --data-urlencode "refresh_token=$DROPBOX_REFRESH_TOKEN" \
-          --data-urlencode "client_id=$DROPBOX_APP_KEY" \
-          --data-urlencode "client_secret=$DROPBOX_APP_SECRET" | jq -r '.access_token')
-          python upload_to_dropbox.py "./atlanticpuzzle_$DATE.puz" "/Atlantic_Puzzles/atlanticpuzzle_$DATE.puz" "${access_token}"
+          response=$(curl https://api.dropbox.com/oauth2/token \
+            -d code=eLzI5_OmEwAAAAAAAAAAaDC8A8IDk3PBpcUMH5sQ6SY \
+            -d grant_type=authorization_code \
+            --data-urlencode "client_id=$DROPBOX_APP_KEY" \
+            --data-urlencode "client_secret=$DROPBOX_APP_SECRET")
+          access_token=$(echo $response | jq -r '.access_token')
+          refresh_token=$(echo $response | jq -r '.refresh_token')
+          echo "NEW_DROPBOX_ACCESS_TOKEN=$access_token" >> $GITHUB_ENV
+          echo "NEW_DROPBOX_REFRESH_TOKEN=$refresh_token" >> $GITHUB_ENV
+          python upload_to_dropbox.py "./atlanticpuzzle_$DATE.puz" "/Atlantic_Puzzles/atlanticpuzzle_$DATE.puz" "$access_token"
