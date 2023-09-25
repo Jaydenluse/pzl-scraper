@@ -28,6 +28,16 @@ jobs:
           DATE=$(date +'%Y%m%d_%A') 
           xword-dl nd --latest -o ./atlanticpuzzle_$DATE.puz
 
+      - name: Get new access token
+        run: |
+          access_token=$(curl -X POST https://api.dropboxapi.com/oauth2/token \
+          --header "Content-Type: application/x-www-form-urlencoded" \
+          --data-urlencode "grant_type=refresh_token" \
+          --data-urlencode "refresh_token=${{ secrets.DROPBOX_REFRESH_TOKEN }}" \
+          --data-urlencode "client_id=${{ secrets.DROPBOX_APP_KEY }}" \
+          --data-urlencode "client_secret=${{ secrets.DROPBOX_APP_SECRET }}" | jq -r '.access_token')
+          echo "::set-env name=DROPBOX_ACCESS_TOKEN::$access_token"
+
       - name: Upload puzzle to Dropbox
         run: |
           DATE=$(date +'%Y%m%d_%A') 
