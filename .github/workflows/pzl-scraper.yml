@@ -33,11 +33,13 @@ jobs:
           curl -LO https://github.com/andreafabrizi/Dropbox-Uploader/raw/master/dropbox_uploader.sh
           chmod +x dropbox_uploader.sh
 
+      - name: Create Dropbox Uploader Config
+        run: |
+          echo "OAUTH_APP_KEY=${{ secrets.APP_KEY }}" > .dropbox_uploader
+          echo "OAUTH_APP_SECRET=${{ secrets.APP_SECRET }}" >> .dropbox_uploader
+          echo "OAUTH_REFRESH_TOKEN=${{ secrets.ACCESS_TOKEN }}" >> .dropbox_uploader
+
       - name: Upload puzzle to Dropbox
         run: |
           DATE=$(date +'%Y%m%d')
-          ./dropbox_uploader.sh -f $DROPBOX_UPLOADER_CONFIG upload ./puzzle_$DATE.puz /Atlantic_Puzzles/puzzle_$DATE.puz
-        env:
-          APP_KEY: ${{ secrets.APP_KEY }}
-          APP_SECRET: ${{ secrets.APP_SECRET }}
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ./dropbox_uploader.sh upload ./puzzle_$DATE.puz /Atlantic_Puzzles/puzzle_$DATE.puz
