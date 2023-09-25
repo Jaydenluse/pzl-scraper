@@ -1,4 +1,4 @@
-name: Download and Upload Atlantic Crossword Puzzle
+name: Download and Upload Crossword Puzzle
 
 on:
   push:
@@ -22,24 +22,19 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install xword-dl
+          pip install pydrive  # Installing library for Google Drive access
 
       - name: Download Puzzle
         run: |
           DATE=$(date +'%Y%m%d')
           xword-dl nd --latest -o ./puzzle_$DATE.puz
 
-      - name: Download Dropbox Uploader
+      # Setup Google Drive API credentials from GitHub secret
+      - name: Setup Google Drive API Credentials
         run: |
-          curl -LO https://github.com/andreafabrizi/Dropbox-Uploader/raw/master/dropbox_uploader.sh
-          chmod +x dropbox_uploader.sh
+          echo "${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}" > credentials.json
 
-      # Create .dropbox_uploader file from GitHub secret
-      - name: Setup Dropbox Uploader
-        run: |
-          echo "${{ secrets.DROPBOX_UPLOADER_CONFIG }}" > ~/.dropbox_uploader
-
-      - name: Upload puzzle to Dropbox
+      - name: Upload puzzle to Google Drive
         run: |
           DATE=$(date +'%Y%m%d')
-          ./dropbox_uploader.sh -d upload ./puzzle_$DATE.puz /Atlantic_Puzzles/puzzle_$DATE.puz
-
+          python upload_to_gdrive.py ./puzzle_$DATE.puz /Atlantic_Puzzles/puzzle_$DATE.puz
