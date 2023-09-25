@@ -1,0 +1,22 @@
+name: Scrape Atlantic Crossword Puzzle
+
+on:
+  schedule: 
+    - cron: '0 8 * * *' # Run every day at 8am
+
+jobs:
+  scrape:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install python3-pip
+          pip3 install xword-dl
+
+      - name: Scrape crossword puzzle
+        run: |
+          # Add your script commands here
