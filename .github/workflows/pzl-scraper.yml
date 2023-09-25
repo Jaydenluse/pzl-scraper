@@ -38,22 +38,8 @@ jobs:
         run: |
           echo "${{ secrets.DROPBOX_UPLOADER_CONFIG }}" > ~/.dropbox_uploader
 
-      - name: Upload puzzle to Dropbox and Check Response
+      - name: Upload puzzle to Dropbox
         run: |
           DATE=$(date +'%Y%m%d')
-          echo "Before script execution"
-          ./dropbox_uploader.sh -d upload ./puzzle_$DATE.puz /Atlantic_Puzzles/puzzle_$DATE.puz > /tmp/du_resp_out 2> /tmp/du_resp_err
-          echo "After script execution"
-          echo "Exit Status: $?"
-          echo "Output File Details:"
-          ls -l /tmp/du_resp_out /tmp/du_resp_err
-          echo "Output Content:"
-          cat /tmp/du_resp_out
-          echo "Error Content:"
-          cat /tmp/du_resp_err
-
-
-
-
-
+          ./dropbox_uploader.sh -d upload ./puzzle_$DATE.puz /Atlantic_Puzzles/puzzle_$DATE.puz
 
