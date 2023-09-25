@@ -34,8 +34,8 @@ jobs:
           response=$(curl https://api.dropbox.com/oauth2/token \
             -d code=eLzI5_OmEwAAAAAAAAAAaDC8A8IDk3PBpcUMH5sQ6SY \
             -d grant_type=authorization_code \
-            --data-urlencode "client_id=$DROPBOX_APP_KEY" \
-            --data-urlencode "client_secret=$DROPBOX_APP_SECRET")
+            --data-urlencode "client_id=${{ secrets.APP_KEY }}" \
+            --data-urlencode "client_secret=${{ secrets.APP_SECRET }}")
           access_token=$(echo $response | jq -r '.access_token')
           refresh_token=$(echo $response | jq -r '.refresh_token')
           echo $access_token
