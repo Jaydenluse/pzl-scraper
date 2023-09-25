@@ -41,5 +41,19 @@ jobs:
       - name: Upload puzzle to Dropbox and Check Response
         run: |
           DATE=$(date +'%Y%m%d')
-          ./dropbox_uploader.sh -d upload ./puzzle_$DATE.puz /Atlantic_Puzzles/puzzle_$DATE.puz > /tmp/du_resp_debug 2>&1
-          cat /tmp/du_resp_debug
+          echo "Before script execution"
+          ./dropbox_uploader.sh -d upload ./puzzle_$DATE.puz /Atlantic_Puzzles/puzzle_$DATE.puz > /tmp/du_resp_out 2> /tmp/du_resp_err
+          echo "After script execution"
+          echo "Exit Status: $?"
+          echo "Output File Details:"
+          ls -l /tmp/du_resp_out /tmp/du_resp_err
+          echo "Output Content:"
+          cat /tmp/du_resp_out
+          echo "Error Content:"
+          cat /tmp/du_resp_err
+
+
+
+
+
+
