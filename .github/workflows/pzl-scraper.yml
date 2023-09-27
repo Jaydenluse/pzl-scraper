@@ -32,8 +32,10 @@ jobs:
           xword-dl std --latest -o ./derstandardpuzzle_$DATE.puz
           xword-dl lat --latest -o ./losangelestimespuzzle_$DATE.puz
           xword-dl mck --latest -o ./themckinleypuzzle_$DATE.puz
-          xword-dl nyt --latest -o ./newyorktimespuzzle_$DATE.puz
-          xword-dl nytm --latest -o ./newyorktimesminipuzzle_$DATE.puz
+          xword-dl uni --latest -o ./universalpuzzle_$DATE.puz
+          xword-dl usa --latest -o ./usatodaypuzzle_$DATE.puz
+          xword-dl vox --latest -o ./voxpuzzle_$DATE.puz
+          xword-dl wsj --latest -o ./wallstreetjournalpuzzle_$DATE.puz
 
       - name: Upload puzzle to Dropbox
         run: |
@@ -53,8 +55,10 @@ jobs:
           puzzles[derstandardpuzzle]="Derstandard_Puzzles"
           puzzles[losangelestimespuzzle]="LATimes_Puzzles"
           puzzles[themckinleypuzzle]="Themckinley_Puzzles"
-          puzzles[newyorktimespuzzle]="NYT_Puzzles"
-          puzzles[newyorktimesmini]="NYTmini_Puzzles"
+          puzzles[universalpuzzle]="Universal_Puzzles"
+          puzzles[usatodaypuzzle]="USAToday_Puzzles"
+          puzzles[voxpuzzle]="Vox_Puzzles"
+          puzzles[wallstreetjournalpuzzle]="WSJ_Puzzles"
 
           for puzzle in "${!puzzles[@]}"; do
             python upload_to_dropbox.py "./${puzzle}_$DATE.puz" "/${puzzles[$puzzle]}/${puzzle}_$DATE.puz" "$access_token"
