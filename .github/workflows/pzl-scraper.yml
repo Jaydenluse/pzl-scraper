@@ -26,7 +26,14 @@ jobs:
       - name: Download Puzzle
         run: |
           DATE=$(date +'%Y%m%d_%A') 
-          xword-dl nd --latest -o ./atlanticpuzzle_$DATE.puz
+          xword-dl nd --latest -o ./newsday_$DATE.puz
+          xword-dl atl --latest -o ./atlanticpuzzle_$DATE.puz
+          xword-dl db --latest -o ./dailybeastpuzzle_$DATE.puz
+          xword-dl std --latest -o ./derstandardpuzzle_$DATE.puz
+          xword-dl grdc --latest -o ./guardiancrypticpuzzle_$DATE.puz
+          xword-dl grde --latest -o ./guardianeverymanpuzzle_$DATE.puz
+          xword-dl grdp --latest -o ./guardianprizepuzzle_$DATE.puz
+          xword-dl grds --latest -o ./guardianspeedypuzzle_$DATE.puz
 
       - name: Upload puzzle to Dropbox
         run: |
@@ -38,4 +45,17 @@ jobs:
             --data-urlencode "client_secret=${{ secrets.APP_SECRET }}")
           access_token=$(echo $response | jq -r '.access_token')
           echo "NEW_DROPBOX_ACCESS_TOKEN=$access_token" >> $GITHUB_ENV
-          python upload_to_dropbox.py "./atlanticpuzzle_$DATE.puz" "/Atlantic_Puzzles/atlanticpuzzle_$DATE.puz" "$access_token"
+
+          declare -A puzzles
+          puzzles[newsday]="Newsday_Puzzles"
+          puzzles[atlanticpuzzle]="Atlantic_Puzzles"
+          puzzles[dailybeastpuzzle]="Dailybeast_Puzzles"
+          puzzles[derstandardpuzzle]="Derstandard_Puzzles"
+          puzzles[derstandardpuzzle]="Guardiancryptic_Puzzles"
+          puzzles[derstandardpuzzle]="Guardianeveryman_Puzzles"
+          puzzles[derstandardpuzzle]="Guardianprize_Puzzles"
+          puzzles[derstandardpuzzle]="Guardianspeedy_Puzzles"
+
+          for puzzle in "${!puzzles[@]}"; do
+            python upload_to_dropbox.py "./${puzzle}_$DATE.puz" "/${puzzles[$puzzle]}/${puzzle}_$DATE.puz" "$access_token"
+          done
