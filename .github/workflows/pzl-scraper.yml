@@ -35,7 +35,6 @@ jobs:
           xword-dl uni --latest -o ./universalpuzzle_$DATE.puz
           xword-dl usa --latest -o ./usatodaypuzzle_$DATE.puz
           xword-dl vox --latest -o ./voxpuzzle_$DATE.puz
-          xword-dl wsj --latest -o ./wallstreetjournalpuzzle_$DATE.puz
 
       - name: Upload puzzle to Dropbox
         run: |
@@ -58,8 +57,12 @@ jobs:
           puzzles[universalpuzzle]="Universal_Puzzles"
           puzzles[usatodaypuzzle]="USAToday_Puzzles"
           puzzles[voxpuzzle]="Vox_Puzzles"
-          puzzles[wallstreetjournalpuzzle]="WSJ_Puzzles"
 
           for puzzle in "${!puzzles[@]}"; do
-            python upload_to_dropbox.py "./${puzzle}_$DATE.puz" "/${puzzles[$puzzle]}/${puzzle}_$DATE.puz" "$access_token"
+            file="./${puzzle}_$DATE.puz"
+            if [[ -f $file ]]; then
+              python upload_to_dropbox.py "$file" "/${puzzles[$puzzle]}/${puzzle}_$DATE.puz" "$access_token"
+            else
+              echo "File $file does not exist, skipping upload."
+            fi
           done
