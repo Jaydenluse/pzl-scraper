@@ -30,10 +30,10 @@ jobs:
           xword-dl atl --latest -o ./atlanticpuzzle_$DATE.puz
           xword-dl db --latest -o ./dailybeastpuzzle_$DATE.puz
           xword-dl std --latest -o ./derstandardpuzzle_$DATE.puz
-          xword-dl grdc --latest -o ./guardiancrypticpuzzle_$DATE.puz
-          xword-dl grde --latest -o ./guardianeverymanpuzzle_$DATE.puz
-          xword-dl grdp --latest -o ./guardianprizepuzzle_$DATE.puz
-          xword-dl grds --latest -o ./guardianspeedypuzzle_$DATE.puz
+          xword-dl lat --latest -o ./losangelestimespuzzle_$DATE.puz
+          xword-dl mck --latest -o ./themckinleypuzzle_$DATE.puz
+          xword-dl nyt --latest -o ./newyorktimespuzzle_$DATE.puz
+          xword-dl nytm --latest -o ./newyorktimesminipuzzle_$DATE.puz
 
       - name: Upload puzzle to Dropbox
         run: |
@@ -51,10 +51,10 @@ jobs:
           puzzles[atlanticpuzzle]="Atlantic_Puzzles"
           puzzles[dailybeastpuzzle]="Dailybeast_Puzzles"
           puzzles[derstandardpuzzle]="Derstandard_Puzzles"
-          puzzles[derstandardpuzzle]="Guardiancryptic_Puzzles"
-          puzzles[derstandardpuzzle]="Guardianeveryman_Puzzles"
-          puzzles[derstandardpuzzle]="Guardianprize_Puzzles"
-          puzzles[derstandardpuzzle]="Guardianspeedy_Puzzles"
+          puzzles[losangelestimespuzzle]="LATimes_Puzzles"
+          puzzles[themckinleypuzzle]="Themckinley_Puzzles"
+          puzzles[newyorktimespuzzle]="NYT_Puzzles"
+          puzzles[newyorktimesmini]="NYTmini_Puzzles"
 
           for puzzle in "${!puzzles[@]}"; do
             python upload_to_dropbox.py "./${puzzle}_$DATE.puz" "/${puzzles[$puzzle]}/${puzzle}_$DATE.puz" "$access_token"
