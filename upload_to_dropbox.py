@@ -12,10 +12,10 @@ def upload_to_dropbox(file_path, target_path, access_token):
     with open(file_path, 'rb') as f:
         data = f.read()
         response = requests.post(url, headers=headers, data=data)
-        print(response.text)
+        if response.status_code == 200:
+            print(f"Successfully uploaded {file_path} to {target_path}")
+        else:
+            print(f"Failed to upload {file_path}. Status code: {response.status_code} - Response: {response.text}")
+            sys.exit(1)  # Exiting with a non-zero status to indicate failure
 
-if __name__ == "__main__":
-    file_path = sys.argv[1]
-    target_path = sys.argv[2]
-    access_token = sys.argv[3]
-    upload_to_dropbox(file_path, target_path, access_token)
+# Use this function with command-line arguments or adjust as needed
