@@ -1,4 +1,4 @@
-name: Download + Upload Atlantic Crossword Puzzle
+name: Download + Upload Various Crossword Puzzles
 
 on:
   push:
@@ -29,6 +29,7 @@ jobs:
           pip install xword-dl
 
       - name: Download Puzzle
+        continue-on-error: true
         run: |
           DATE=$(date +'%Y%m%d_%A') 
           xword-dl nd --latest -o ./newsday_$DATE.puz
