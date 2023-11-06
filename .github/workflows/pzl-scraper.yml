@@ -26,6 +26,8 @@ jobs:
 
       - name: Install Python Dependencies
         run: |
+          python -m venv venv
+          source venv/bin/activate
           pip install xword-dl requests
 
       - name: Download Puzzle
@@ -71,7 +73,7 @@ jobs:
           for puzzle in "${!puzzles[@]}"; do
             file="./${puzzle}_$DATE.puz"
             if [[ -f $file ]]; then
-              python upload_to_dropbox.py "$file" "/${puzzles[$puzzle]}/${puzzle}_$DATE.puz" "$access_token"
+              ./venv/bin/python upload_to_dropbox.py "$file" "/${puzzles[$puzzle]}/${puzzle}_$DATE.puz" "$access_token"
             else
               echo "File $file does not exist, skipping upload."
             fi
