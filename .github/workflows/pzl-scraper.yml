@@ -17,18 +17,22 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
+          python-version: '3.9'  # Updated to use Python 3.9
 
       - name: Install System Dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y libxml2-dev libxslt-dev jq
 
+      - name: Update pip
+        run: |
+          python -m pip install --upgrade pip
+
       - name: Install Python Dependencies
         run: |
           python -m venv venv
           source venv/bin/activate
-          pip install xword-dl requests lxml
+          pip install xword-dl requests lxml  # lxml explicitly included
 
       - name: Download Puzzle
         continue-on-error: true
