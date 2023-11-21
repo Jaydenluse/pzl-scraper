@@ -70,7 +70,6 @@ jobs:
           puzzles[dailybeastpuzzle]="Dailybeast_Puzzles"
           puzzles[derstandardpuzzle]="Derstandard_Puzzles"
           puzzles[losangelestimespuzzle]="LATimes_Puzzles"
-          puzzles[themckinleypuzzle]="Themckinley_Puzzles"
           puzzles[universalpuzzle]="Universal_Puzzles"
           puzzles[usatodaypuzzle]="USAToday_Puzzles"
           puzzles[voxpuzzle]="Vox_Puzzles"
