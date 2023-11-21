@@ -45,7 +45,6 @@ jobs:
           xword-dl db --latest -o ./dailybeastpuzzle_$DATE.puz
           xword-dl std --latest -o ./derstandardpuzzle_$DATE.puz
           xword-dl lat --latest -o ./losangelestimespuzzle_$DATE.puz
-          xword-dl mck --latest -o ./themckinleypuzzle_$DATE.puz
           xword-dl uni --latest -o ./universalpuzzle_$DATE.puz
           xword-dl usa --latest -o ./usatodaypuzzle_$DATE.puz
           xword-dl vox --latest -o ./voxpuzzle_$DATE.puz
