@@ -37,6 +37,7 @@ jobs:
       - name: Download Puzzle
         continue-on-error: true
         run: |
+          source venv/bin/activate
           DATE=$(date +'%Y%m%d_%A') 
           xword-dl nd --latest -o ./newsday_$DATE.puz
           xword-dl atl --latest -o ./atlanticpuzzle_$DATE.puz
