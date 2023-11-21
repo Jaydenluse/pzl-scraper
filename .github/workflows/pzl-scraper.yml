@@ -33,6 +33,7 @@ jobs:
           python -m venv venv
           source venv/bin/activate
           pip install xword-dl requests lxml  # lxml explicitly included
+          pip install --upgrade xword-dl
 
       - name: Download Puzzle
         continue-on-error: true
